@@ -20,6 +20,7 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
+// Selection by Konrad Kiss & smally
 singleton GFXStateBlockData( PFX_DefaultSelectionStateBlock : PFX_DefaultStateBlock)
 {
 zDefined = true;

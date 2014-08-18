@@ -19,6 +19,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS  
 // IN THE SOFTWARE.  
 //-----------------------------------------------------------------------------  
+// SunBokeh  by Felix Willebrand Westin
   
 #include "shadergen:/autogenConditioners.h"  
 #include "./postFx.hlsl"  

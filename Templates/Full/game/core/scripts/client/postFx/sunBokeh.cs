@@ -20,7 +20,7 @@
 // IN THE SOFTWARE.  
 //-----------------------------------------------------------------------------  
   
-///   
+// SunBokeh by Felix Willebrand Westin
 $SunBokehFx::enabled = true;  
   
 $SunBokehFx::sunAmount = 0.4;  
