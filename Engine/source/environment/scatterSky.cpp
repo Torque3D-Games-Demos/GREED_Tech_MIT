@@ -654,6 +654,11 @@ void ScatterSky::prepRenderImage( SceneRenderState *state )
       mFlareState.scale = mFlareScale;
       mFlareState.lightInfo = mLight;
 
+    // SunBokeh - Screen flare occlusion fix  
+      F32 screenRadius = GFX->getViewport().extent.y * mFlareScale * 0.01f;  
+      Point3F lightWorldPos = state->getCameraPosition() - state->getFarPlane() * mLight->getDirection() * 0.9f;  
+      F32 dist = ( lightWorldPos - state->getCameraPosition() ).len();  
+	  mFlareState.worldRadius = screenRadius * dist / state->getWorldToScreenScale().y;//>
       Point3F lightPos = state->getCameraPosition() - state->getFarPlane() * mLight->getDirection() * 0.9f;
       mFlareState.lightMat.identity();
       mFlareState.lightMat.setPosition( lightPos );
