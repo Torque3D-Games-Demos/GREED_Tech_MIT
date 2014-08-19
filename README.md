@@ -18,8 +18,6 @@ This is a fork of the MIT Licensed Torque 3D (see http://www.garagegames.com/pro
 
 More Information
 ----------------
-
-* This repository is there for the purpose of developping the gameplay engine behind TheFunZ and h-72.
 * 
 * Torque 3D [GitHub Wiki](https://github.com/GarageGames/Torque3D/wiki)
 * Documentation is in the [Torque3D-Documentation](https://github.com/GarageGames/Torque3D-Documentation) GitHub repo.
