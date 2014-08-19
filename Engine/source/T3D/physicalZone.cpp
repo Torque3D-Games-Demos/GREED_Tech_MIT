@@ -32,6 +32,11 @@
 #include "renderInstance/renderPassManager.h"
 #include "gfx/gfxDrawUtil.h"
 #include "console/engineAPI.h"
+// BlissGMK >>
+#include "T3D/physics/physicsPlugin.h"
+#include "T3D/physics/physicsBody.h"
+#include "T3D/physics/physicsCollision.h"
+// BlissGMK <<
 
 IMPLEMENT_CO_NETOBJECT_V1(PhysicalZone);
 
@@ -103,6 +108,10 @@ PhysicalZone::PhysicalZone()
 
    mConvexList = new Convex;
    mActive = true;
+   // BlissGMK >>
+   mInvisibleWall = false;
+   mPhysicsRep = NULL;
+   // BlissGMK <<
 }
 
 PhysicalZone::~PhysicalZone()
@@ -127,6 +136,9 @@ void PhysicalZone::initPersistFields()
    addField("polyhedron",   TypeTriggerPolyhedron, Offset(mPolyhedron,   PhysicalZone),
       "The polyhedron type is really a quadrilateral and consists of a corner"
       "point followed by three vectors representing the edges extending from the corner." );
+   // BlissGMK >>
+   addField("invisibleWall", TypeBool,			   Offset(mInvisibleWall,PhysicalZone));
+   // BlissGMK <<
    endGroup("Misc");
 
    Parent::initPersistFields();
@@ -160,18 +172,46 @@ bool PhysicalZone::onAdd()
 
    addToScene();
 
+   // BlissGMK >>
+   if ( PHYSICSMGR/* && isServerObject() */)
+   {
+	   PhysicsCollision *colShape = PHYSICSMGR->createCollision();
+	   Box3F scaledBox = mObjBox;
+	   scaledBox.minExtents.convolve(mObjScale);
+	   scaledBox.maxExtents.convolve(mObjScale);
+	   colShape->addBox( scaledBox.getExtents() * 0.5f, MatrixF::Identity );
+
+	   PhysicsWorld *world = PHYSICSMGR->getWorld( isServerObject() ? "server" : "client" );
+	   mPhysicsRep = PHYSICSMGR->createBody();
+	   mPhysicsRep->init( colShape, 0, PhysicsBody::BF_TRIGGER | PhysicsBody::BF_KINEMATIC, this, world );
+	   MatrixF tr = getTransform();
+	   MatrixF localTr(true);
+	   localTr.setPosition(scaledBox.getCenter());
+	   tr = tr*localTr;
+	   mPhysicsRep->setTransform(tr);
+   }
+   // BlissGMK <<
    return true;
 }
 
 
 void PhysicalZone::onRemove()
 {
+   // BlissGMK >>
+   SAFE_DELETE(mPhysicsRep);
+   // BlissGMK <<
    mConvexList->nukeList();
 
    removeFromScene();
    Parent::onRemove();
 }
 
+// BlissGMK >>
+PhysicsBody* PhysicalZone::getPhysicsRep()
+{
+	return mPhysicsRep;
+}
+// BlissGMK <<
 void PhysicalZone::inspectPostApply()
 {
    setPolyhedron(mPolyhedron);
@@ -271,6 +311,9 @@ U32 PhysicalZone::packUpdate(NetConnection* con, U32 mask, BitStream* stream)
       stream->write(mGravityMod);
       mathWrite(*stream, mAppliedForce);
       stream->writeFlag(mActive);
+	  // BlissGMK >>
+	  stream->writeFlag(mInvisibleWall);
+	  // BlissGMK <<
    } else {
       stream->writeFlag(mActive);
    }
@@ -322,6 +365,9 @@ void PhysicalZone::unpackUpdate(NetConnection* con, BitStream* stream)
       setScale(tempScale);
       setTransform(temp);
       mActive = stream->readFlag();
+	  // BlissGMK >>
+	  mInvisibleWall = stream->readFlag();
+	  // BlissGMK <<
    } else {
       mActive = stream->readFlag();
    }
@@ -424,6 +470,19 @@ bool PhysicalZone::testBox( const Box3F &box ) const
 {
    return mWorldBox.isOverlapped( box );
 }
+
+// BlissGMK >>
+bool PhysicalZone::isInvisibleWall(SceneObject* who)
+{
+	if(mInvisibleWall && who)
+	{
+		const char* result = Con::executef(this, "isWallForObject", who->getIdString());
+		return dAtob(result);
+	}
+	
+	return false;
+}
+// BlissGMK <<
 
 void PhysicalZone::activate()
 {

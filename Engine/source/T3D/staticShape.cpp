@@ -37,6 +37,12 @@
 #include "T3D/physics/physicsPlugin.h"
 #include "T3D/physics/physicsBody.h"
 #include "T3D/physics/physicsCollision.h"
+// BlissGMK >>
+#include "collision/concretePolyList.h"
+#include "T3D/physics/physicsPlugin.h"
+#include "T3D/physics/physicsBody.h"
+#include "T3D/physics/physicsCollision.h"
+// BlissGMK <<
 
 extern void wireCube(F32 size,Point3F pos);
 
@@ -272,12 +278,47 @@ bool StaticShape::onAdd()
 
    addToScene();
 
+   	// BlissGMK >>
+	updatePhysics();
+    // BlissGMK << 
+
    if (isServerObject())
       scriptOnAdd();
 
     return true;
 }
 
+// BlissGMK >>
+void StaticShape::updatePhysics()
+{
+	SAFE_DELETE(mPhysicsRep);
+	if ( PHYSICSMGR)
+	{
+		mShapeInstance->animate();
+
+		// Get the interior collision geometry.
+		ConcretePolyList polylist;
+		if (buildPolyList(PLC_Collision, &polylist, getWorldBox(), getWorldSphere()))
+		{
+			polylist.triangulate();
+
+			PhysicsCollision *colShape = PHYSICSMGR->createCollision();
+			colShape->addTriangleMesh( polylist.mVertexList.address(), 
+				polylist.mVertexList.size(),
+				polylist.mIndexList.address(),
+				polylist.mIndexList.size() / 3,
+				MatrixF::Identity );
+
+			PhysicsWorld *world = PHYSICSMGR->getWorld( isServerObject() ? "server" : "client" );
+			mPhysicsRep = PHYSICSMGR->createBody();
+			//.hack - set kinematic flag to prevent crash on deleting static shape in character sweep(deleting Doors)
+			mPhysicsRep->init( colShape, 0, PhysicsBody::BF_KINEMATIC, this, world );
+		}
+		if (isServerObject())
+			setMaskBits(PhysicsMask);
+	}
+}
+// BlissGMK << 
 bool StaticShape::onNewDataBlock(GameBaseData* dptr, bool reload)
 {
    mDataBlock = dynamic_cast<StaticShapeData*>(dptr);
@@ -369,6 +410,9 @@ U32 StaticShape::packUpdate(NetConnection *connection, U32 mask, BitStream *bstr
       retMask |= mLightPlugin->packUpdate(this, ExtendedInfoMask, connection, mask, bstream);
    }
 
+   // BlissGMK >>
+   bstream->writeFlag(mask & PhysicsMask);
+   // BlissGMK <<
    return retMask;
 }
 
@@ -394,6 +438,10 @@ void StaticShape::unpackUpdate(NetConnection *connection, BitStream *bstream)
    {
       mLightPlugin->unpackUpdate(this, connection, bstream);
    }
+   // BlissGMK >>
+   if (bstream->readFlag())
+		updatePhysics();
+   // BlissGMK <<
 }
 
 
@@ -415,3 +463,10 @@ ConsoleMethod( StaticShape, getPoweredState, bool, 2, 2, "@internal")
       return(false);
    return(object->isPowered());
 }
+
+// BlissGMK >>
+ConsoleMethod( StaticShape, updatePhysics, void, 2, 2, "")
+{
+	object->updatePhysics();
+}
+// BlissGMK <<

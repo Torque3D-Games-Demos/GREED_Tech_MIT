@@ -15,6 +15,10 @@
 #include "T3D/gameBase/gameConnection.h"
 #include "T3D/fx/cameraFXMgr.h"
 
+// BlissGMK >>
+#include "core/threadStatic.h"
+extern bool ATTS(gFreezeSim);
+// BlissGMK <<
 MODULE_BEGIN( ProcessList )
 
    MODULE_INIT
@@ -206,6 +210,11 @@ void ExtendedClientProcessList::onTickObject( ProcessObject *obj )
       }
    }
    else if ( obj->isTicking() )
+	   // BlissGMK >>
+	   //Freezing simulation for all objects, that doesn't controlled
+	   //by client. This will allow us to edit object and fly the camera simultaneously.
+	   if(!ATTS(gFreezeSim))
+		// BlissGMK <<
       obj->processTick( 0 );
 }
 

@@ -3743,6 +3743,14 @@ DefineEngineMethod( ShapeBase, setThreadPosition, bool, ( S32 slot, F32 pos ),,
    return false;
 }
 
+
+// BlissGMK >>
+ConsoleMethod( ShapeBase, setThreadPosition, bool, 4, 4, "( int pSlot, float pos )" )
+{
+	return object->setThreadPosition( dAtoi( argv[2] ), dAtof( argv[3] ) );
+}
+// BlissGMK <<
+
 DefineEngineMethod( ShapeBase, stopThread, bool, ( S32 slot ),,
    "@brief Stop an animation thread.\n\n"
 

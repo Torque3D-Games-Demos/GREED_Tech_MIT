@@ -34,7 +34,7 @@
 #endif
 
 class Convex;
-
+class PhysicsBody;// BlissGMK
 
 class PhysicalZone : public SceneObject
 {
@@ -58,6 +58,10 @@ class PhysicalZone : public SceneObject
 
    bool mActive;
 
+   // BlissGMK >>
+   bool mInvisibleWall;
+   PhysicsBody *mPhysicsRep;
+   // BlissGMK <<
    Convex* mConvexList;
    void buildConvex(const Box3F& box, Convex* convex);
 
@@ -96,6 +100,11 @@ class PhysicalZone : public SceneObject
    void deactivate();
    inline bool isActive() const { return mActive; }
 
+  //.logicking >> Physical zone can just work as invisible wall 
+   // for some kind of objects
+   bool isInvisibleWall(SceneObject* who);
+   PhysicsBody* getPhysicsRep();
+   //.logicking <<
 };
 
 #endif // _H_PHYSICALZONE

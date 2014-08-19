@@ -76,8 +76,12 @@ class StaticShape: public ShapeBase
 
    void _createPhysics();
 
+   // BlissGMK >>
+   PhysicsBody *mPhysicsRep;
 protected:
    enum MaskBits {
+      PositionMask = Parent::NextFreeMask,	  
+	  // BlissGMK <<
       PositionMask = Parent::NextFreeMask,	  
       NextFreeMask = Parent::NextFreeMask << 1
    };
@@ -104,6 +108,7 @@ public:
    bool isPowered()                 {return(mPowered);}
 
    static void initPersistFields();   
+   void updatePhysics();// BlissGMK
 };
 
 

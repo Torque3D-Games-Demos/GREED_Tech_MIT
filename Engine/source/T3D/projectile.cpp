@@ -1266,8 +1266,10 @@ void Projectile::interpolateTick(F32 delta)
 void Projectile::onCollision(const Point3F& hitPosition, const Point3F& hitNormal, SceneObject* hitObject)
 {
    // No client specific code should be placed or branched from this function
+   /* BlissGMK adding client physics
    if(isClientObject())
       return;
+	//*/
 
    if (hitObject != NULL && isServerObject())
    {
@@ -1347,6 +1349,7 @@ void Projectile::unpackUpdate(NetConnection* con, BitStream* stream)
          NetObject* pObject = con->resolveGhost( mSourceObjectId );
          if ( pObject != NULL )
             mSourceObject = dynamic_cast<ShapeBase*>( pObject );
+			deleteNotify( pObject )// BlissGMK - add notify for client
       }
       else
       {

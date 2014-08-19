@@ -40,7 +40,7 @@ public:
       ModeSlowing,                    // AI is slowing down as it reaches it's destination.
 	};
 
-private:
+// BlissGMK private changed to protected
    MoveState mMoveState;
    F32 mMoveSpeed;
    F32 mMoveTolerance;                 // Distance from destination before we stop

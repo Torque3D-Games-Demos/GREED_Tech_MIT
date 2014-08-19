@@ -99,6 +99,8 @@ bool MissionMarker::onAdd()
       mAddedToScene = true;
    }
 
+   // BlissGMK >>
+   scriptOnAdd();
    return(true);
 }
 
@@ -110,6 +112,8 @@ void MissionMarker::onRemove()
       mAddedToScene = false;
    }
 
+   // BlissGMK <<
+   scriptOnRemove();
    Parent::onRemove();
 }
 

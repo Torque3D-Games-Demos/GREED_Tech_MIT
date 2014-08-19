@@ -146,7 +146,12 @@ void TSMesh::render( TSMaterialList *materials,
    TORQUE_UNUSED( primitiveBuffer );
 
    // Pass our shared VB.
-   innerRender( materials, rdata, mVB, mPB );
+   // BlissGMK >>
+   if (mManualDynamic)
+		innerRender( materials, rdata, vertexBuffer, mPB);
+   else
+		innerRender( materials, rdata, mVB, mPB );
+   // BlissGMK <<
 }
 
 void TSMesh::innerRender( TSMaterialList *materials, const TSRenderState &rdata, TSVertexBufferHandle &vb, GFXPrimitiveBufferHandle &pb )
@@ -1157,6 +1162,9 @@ TSMesh::TSMesh() : meshType( StandardMeshType )
    mHasColor = false;
 
    mNumVerts = 0;
+   // BlissGMK >>
+   mManualDynamic = false;
+   // BlissGMK <<
 }
 
 //-----------------------------------------------------
@@ -2367,6 +2375,28 @@ S8 * TSMesh::getSharedData8( S32 parentMesh, S32 size, S8 **source, bool skip )
    return ptr;
 }
 
+// BlissGMK >>
+void TSMesh::createVBIB(TSVertexBufferHandle &vb)
+{
+	AssertFatal( mManualDynamic, "TSMesh::createVBIB(TSVertexBufferHandle &vb) - Invalid call for not mManulDynamic mesh!" );
+	_createVBIB( vb, mPB );
+}
+
+int TSMesh::getVertexStride()
+{
+	if (!mVertexFormat)
+		return 0;
+
+	int res =  3*sizeof( Point3F ) + sizeof( Point2F );//// Point + Normal + Tangent + Texcoord1
+
+	if  (mVertexFormat->hasColor())
+		res += sizeof( GFXVertexColor );
+	if (mVertexFormat->getTexCoordCount() > 1)
+		res += sizeof( Point2F );
+
+	return res;
+}
+// BlissGMK <<
 void TSMesh::createVBIB()
 {
    AssertFatal( getMeshType() != SkinMeshType, "TSMesh::createVBIB() - Invalid call for skinned mesh type!" );
