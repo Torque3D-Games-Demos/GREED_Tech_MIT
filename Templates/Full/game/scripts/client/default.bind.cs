@@ -742,3 +742,21 @@ vehicleMap.bind( gamepad, btn_b, brake );
 vehicleMap.bind( gamepad, btn_x, movebackward );
 // bind exiting the vehicle to a button
 vehicleMap.bindCmd(gamepad, btn_y,"getout();","");
+// PostFx Library>>
+// postFX Gui  
+function postFXGuiToggle(%val)  
+{  
+   if (%val)  
+   {  
+      if (guiPostFX.isAwake())  
+      {  
+         Canvas.popDialog(guiPostFX);  
+      }   
+      else   
+      {  
+         Canvas.pushDialog(guiPostFX);  
+      }  
+   }  
+}  
+moveMap.bind( keyboard, "alt m", postFXGuiToggle ); // replace with keystroke of your choosing
+// PostFx Library<<
