@@ -104,7 +104,9 @@ function initClient()
    exec("./game.cs");
    exec("./missionDownload.cs");
    exec("./serverConnection.cs");
-
+   // BlissGMK >>
+   exec("./logickingMechanics/init.cs");
+   // BlissGMK<<
    // Load useful Materials
    exec("./shaders.cs");
 

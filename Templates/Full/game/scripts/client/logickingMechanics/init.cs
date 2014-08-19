@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------
-// Copyright (c) 2012 GarageGames, LLC
+// Copyright (C) LogicKing.com, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to
@@ -20,42 +20,44 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-// Load up all scripts.  This function is called when
-// a server is constructed.
-exec("./camera.cs");
-exec("./triggers.cs");
-exec("./inventory.cs");
-exec("./shapeBase.cs");
-exec("./item.cs");
-exec("./health.cs");
-exec("./projectile.cs");
-exec("./radiusDamage.cs");
-exec("./teleporter.cs");
+moveMap.bind(keyboard, "e", useObject);
 
-// Load our supporting weapon script, it contains methods used by all weapons.
-exec("./weapon.cs");
+// Used to call "use" method
+function useObject(%flg)
+{    
+    commandToServer('useObj', %flg);
+}
 
-// Load our weapon scripts
-// We only need weapon scripts for those weapons that work differently from the
-// class methods defined in weapon.cs
-exec("./proximityMine.cs");
+function clientCmdUpdateUseIcon(%isUsable)
+{
+	if(%isUsable)
+	{
+        crossHair.setVisible(false);
+        useCrossHair.setVisible(true);
+	}
+	else
+	{
+        crossHair.setVisible(true);
+        useCrossHair.setVisible(false);
+	}
+} 
 
-// Load our default player script
-exec("./player.cs");
+addMessageCallback( 'MsgDoorLocked', handleDoorLocked );
 
-// Load our player scripts
-exec("./aiPlayer.cs");
 
-exec("./vehicle.cs");
-exec("./vehicleWheeled.cs");
-exec("./cheetah.cs");
+function GameMessageText::hideText()
+{
+	GameMessageText.needToHide = GameMessageText.needToHide - 1;
+	if(GameMessageText.needToHide == 0)
+		GameMessageText.setVisible(false);
+	
+}
 
-// Load turret support scripts
-exec("./turret.cs");
-
-// Load our gametypes
-exec("./gameCore.cs"); // This is the 'core' of the gametype functionality.
-exec("./gameDM.cs"); // Overrides GameCore with DeathMatch functionality.
-// BlissGMK >>
-exec("./logickingMechanics/logickingMechanics.cs");
-// BlissGMK <<
+function handleDoorLocked(%msgType, %msgString)
+{
+   GameMessageText.setVisible(true);
+   GameMessageText.setText(detag(%msgString));
+   GameMessageText.needToHide = GameMessageText.needToHide $="" ? 0 : GameMessageText.needToHide;
+   GameMessageText.needToHide = GameMessageText.needToHide + 1;
+   GameMessageText.schedule(4000, hideText);
+}
