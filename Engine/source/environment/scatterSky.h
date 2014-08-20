@@ -109,7 +109,8 @@ public:
    F32 getAzimuth() const { return mSunAzimuth; }
    ///
    F32 getElevation() const { return mSunElevation; }
-
+   ///  
+   F32 getSunVisibility() const { return mFlareData->getVisibility(); }// SunBokeh
 protected:
 
    void _render( ObjectRenderInst *ri, SceneRenderState *state, BaseMatInstance *overrideMat );

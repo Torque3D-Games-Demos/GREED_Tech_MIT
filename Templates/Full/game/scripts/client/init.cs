@@ -83,6 +83,7 @@ function initClient()
    exec("art/gui/joinServerDlg.gui");
    exec("art/gui/endGameGui.gui");
    exec("art/gui/StartupGui.gui");
+   exec("art/gui/guiPostFX.gui");// PostFx Library
    exec("art/gui/chooseLevelDlg.gui");
    exec("art/gui/loadingGui.gui");
    exec("art/gui/optionsDlg.gui");

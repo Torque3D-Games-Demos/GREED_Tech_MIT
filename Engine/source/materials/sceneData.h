@@ -52,6 +52,10 @@ struct SceneData
       /// The prepass render bin.
       /// @RenderPrePassMgr
       PrePassBin,
+	  
+      /// Selection PostFx - The selection render bin.
+      /// @RenderSelectionMgr
+      SelectionBin,
    };
 
    /// This defines when we're rendering a special bin 

@@ -250,7 +250,9 @@ void MatInstance::construct()
    mHasNormalMaps = false;
    mIsForwardLit = false;
    mIsValid = false;
-
+   // Selection PostFx>>>
+   mHasSelection = false;
+   // <<<
    MATMGR->_track(this);
 }
 

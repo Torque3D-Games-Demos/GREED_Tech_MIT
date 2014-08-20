@@ -92,7 +92,10 @@ public:
 
    /// Submits render instances for corona and flare effects.
    void prepRender( SceneRenderState *state, LightFlareState *flareState );
-
+   
+   ///  
+   F32 getVisibility() const { return mVisibility; } // SunBokeh
+   
 protected:
 
    bool _testVisibility(   const SceneRenderState *state, LightFlareState *flareState, 
@@ -112,6 +115,7 @@ protected:
    // Fields...
 
    F32 mScale;
+   F32 mVisibility; // SunBokeh
    bool mFlareEnabled;
    String mFlareTextureName;
    GFXTexHandle mFlareTexture;

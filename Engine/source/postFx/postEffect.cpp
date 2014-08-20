@@ -44,6 +44,7 @@
 #include "materials/shaderData.h"
 #include "postFx/postEffectManager.h"
 #include "postFx/postEffectVis.h"
+#include "environment/scatterSky.h"//SunBokeh
 
 using namespace Torque;
 
@@ -273,6 +274,7 @@ PostEffect::PostEffect()
       mWaterFogPlaneSC( NULL ),
       mWaterDepthGradMaxSC( NULL ),
       mScreenSunPosSC( NULL ),
+	  mSunVisibilitySC( NULL ),//SunBokeh
       mLightDirectionSC( NULL ),
       mCameraForwardSC( NULL ),
       mAccumTimeSC( NULL ),
@@ -566,6 +568,7 @@ void PostEffect::_setupConstants( const SceneRenderState *state )
       mWaterFogPlaneSC = mShader->getShaderConstHandle( "$waterFogPlane" );      
       mWaterDepthGradMaxSC = mShader->getShaderConstHandle( "$waterDepthGradMax" );
       mScreenSunPosSC = mShader->getShaderConstHandle( "$screenSunPos" );
+	  mSunVisibilitySC = mShader->getShaderConstHandle( "$sunVisibility" );//SunBokeh
       mLightDirectionSC = mShader->getShaderConstHandle( "$lightDirection" );
       mCameraForwardSC = mShader->getShaderConstHandle( "$camForward" );
 
@@ -786,7 +789,16 @@ void PostEffect::_setupConstants( const SceneRenderState *state )
 
          mShaderConsts->set( mScreenSunPosSC, Point2F( sunPos.x, sunPos.y ) );
       }
-
+// SunBokeh
+if( mSunVisibilitySC->isValid() )  
+      {  
+        ScatterSky* pSky = dynamic_cast<ScatterSky*>(Sim::findObject("Sunlight"));    
+        if(pSky)    
+           mShaderConsts->set( mSunVisibilitySC, pSky->getSunVisibility() );    
+        else    
+           mShaderConsts->set( mSunVisibilitySC, 0.0f );    
+      }//>
+	  
       if ( mLightDirectionSC->isValid() )
       {
          LightInfo *sunLight = LIGHTMGR->getSpecialLight( LightManager::slSunLightType );

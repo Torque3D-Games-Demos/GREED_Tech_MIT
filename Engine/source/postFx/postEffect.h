@@ -136,6 +136,7 @@ protected:
    GFXShaderConstHandle *mWaterFogPlaneSC;
    GFXShaderConstHandle *mWaterDepthGradMaxSC;
    GFXShaderConstHandle *mScreenSunPosSC;
+   GFXShaderConstHandle *mSunVisibilitySC;// SunBokeh
    GFXShaderConstHandle *mLightDirectionSC;
    GFXShaderConstHandle *mCameraForwardSC;
    GFXShaderConstHandle *mAccumTimeSC;

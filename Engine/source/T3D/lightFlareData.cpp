@@ -122,6 +122,7 @@ LightFlareData::LightFlareData()
  : mFlareEnabled( true ),
    mElementCount( 0 ),
    mScale( 1.0f ),
+   mVisibility( 1.0f ),// SunBokeh
    mOcclusionRadius( 0.0f ),
    mRenderReflectPass( true )
 {
@@ -444,6 +445,8 @@ void LightFlareData::prepRender( SceneRenderState *state, LightFlareState *flare
    U32 visDelta = U32_MAX;
    F32 occlusionFade = 1.0f;
    Point3F lightPosSS;
+   // SunBokeh - Sun visibility, assume 0 at start of frame  
+   mVisibility = 0;//>
    bool lightVisible = _testVisibility( state, flareState, &visDelta, &occlusionFade, &lightPosSS );
    
    // We can only skip rendering if the light is not 
@@ -519,6 +522,10 @@ void LightFlareData::prepRender( SceneRenderState *state, LightFlareState *flare
    if ( mIsZero( lightSourceIntensityScale ) )
       return;
 
+   // SunBokeh
+   mVisibility =    lightSourceBrightnessScale *   
+                    fadeInOutScale *   
+                    occlusionFade;//>
    // The baseColor which modulates the color of all elements.
    //
    // These are the factors which affect the "alpha" of the flare effect.
