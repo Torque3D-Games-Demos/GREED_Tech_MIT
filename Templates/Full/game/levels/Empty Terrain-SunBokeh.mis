@@ -16,7 +16,7 @@ new SimGroup(MissionGroup) {
          desc0 = "An empty terrain with SunBokeh, check the LevelInfo. Inside the Levelinfo you have to set the flareType to Sunlight if you want to have sunBokeh running.";
          LevelName = "Empty Terrain-SunBokeh";
    };
-   new ScatterSky() {
+   new ScatterSky(Sunlight) {
       skyBrightness = "30";
       mieScattering = "0.0015";
       rayleighScattering = "0.0035";
@@ -27,7 +27,7 @@ new SimGroup(MissionGroup) {
       elevation = "54";
       castShadows = "1";
       brightness = "1";
-      flareType = "Sunlight";
+      flareType = "NullLightFlare";
       flareScale = "1";
       nightColor = "0.0196078 0.0117647 0.109804 1";
       moonEnabled = "1";
