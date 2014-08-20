@@ -480,10 +480,14 @@ bool TerrainBlock::getHeight( const Point2F &pos, F32 *height ) const
    if ( sq->flags & TerrainSquare::Empty )
       return false;
 
-   F32 zBottomLeft = fixedToFloat( mFile->getHeight( x, y ) );
-   F32 zBottomRight = fixedToFloat( mFile->getHeight( x + 1, y ) );
-   F32 zTopLeft = fixedToFloat( mFile->getHeight( x, y + 1 ) );
-   F32 zTopRight = fixedToFloat( mFile->getHeight( x + 1, y + 1 ) );
+   F32  zBottomLeft, zBottomRight, zTopLeft, zTopRight;
+   mFile->getHeight4(
+      &zBottomLeft, &zBottomRight, &zTopLeft, &zTopRight,
+      Point2I( x, y ),
+      Point2I( x + 1, y ),
+      Point2I( x, y + 1 ),
+      Point2I( x + 1, y + 1 )
+   );
 
    if ( sq->flags & TerrainSquare::Split45 )
    {
@@ -531,10 +535,14 @@ bool TerrainBlock::getNormal( const Point2F &pos, Point3F *normal, bool normaliz
    if ( skipEmpty && sq->flags & TerrainSquare::Empty )
       return false;
 
-   F32 zBottomLeft = fixedToFloat( mFile->getHeight( x, y ) );
-   F32 zBottomRight = fixedToFloat( mFile->getHeight( x + 1, y ) );
-   F32 zTopLeft = fixedToFloat( mFile->getHeight( x, y + 1 ) );
-   F32 zTopRight = fixedToFloat( mFile->getHeight( x + 1, y + 1 ) );
+   F32  zBottomLeft, zBottomRight, zTopLeft, zTopRight;
+   mFile->getHeight4(
+      &zBottomLeft, &zBottomRight, &zTopLeft, &zTopRight,
+      Point2I( x, y ),
+      Point2I( x + 1, y ),
+      Point2I( x, y + 1 ),
+      Point2I( x + 1, y + 1 )
+   );
 
    if ( sq->flags & TerrainSquare::Split45 )
    {
@@ -586,11 +594,14 @@ bool TerrainBlock::getSmoothNormal( const Point2F &pos,
    if ( skipEmpty && sq->flags & TerrainSquare::Empty )
       return false;
 
-   F32 h1 = fixedToFloat( mFile->getHeight( x + 1, y ) );
-   F32 h2 = fixedToFloat( mFile->getHeight( x, y + 1 ) );
-   F32 h3 = fixedToFloat( mFile->getHeight( x - 1, y ) );
-   F32 h4 = fixedToFloat( mFile->getHeight( x, y - 1 ) );
-
+   F32  h1, h2, h3, h4;
+   mFile->getHeight4(
+      &h1, &h2, &h3, &h4,
+      Point2I( x + 1, y     ),
+      Point2I( x,     y + 1 ),
+      Point2I( x - 1, y     ),
+      Point2I( x,     y - 1 )
+   );
    normal->set( h3 - h1, h4 - h2, mSquareSize * 2.0f );
 
    if ( normalize )
@@ -623,10 +634,14 @@ bool TerrainBlock::getNormalAndHeight( const Point2F &pos, Point3F *normal, F32 
    if ( sq->flags & TerrainSquare::Empty )
       return false;
 
-   F32 zBottomLeft  = fixedToFloat( mFile->getHeight(x, y) );
-   F32 zBottomRight = fixedToFloat( mFile->getHeight(x + 1, y) );
-   F32 zTopLeft     = fixedToFloat( mFile->getHeight(x, y + 1) );
-   F32 zTopRight    = fixedToFloat( mFile->getHeight(x + 1, y + 1) );
+   F32  zBottomLeft, zBottomRight, zTopLeft, zTopRight;
+   mFile->getHeight4(
+      &zBottomLeft, &zBottomRight, &zTopLeft, &zTopRight,
+      Point2I( x, y ),
+      Point2I( x + 1, y ),
+      Point2I( x, y + 1 ),
+      Point2I( x + 1, y + 1 )
+   );
 
    if ( sq->flags & TerrainSquare::Split45 )
    {
@@ -695,10 +710,14 @@ bool TerrainBlock::getNormalHeightMaterial(  const Point2F &pos,
    if ( sq->flags & TerrainSquare::Empty )
       return false;
 
-   F32 zBottomLeft  = fixedToFloat( mFile->getHeight(x, y) );
-   F32 zBottomRight = fixedToFloat( mFile->getHeight(x + 1, y) );
-   F32 zTopLeft     = fixedToFloat( mFile->getHeight(x, y + 1) );
-   F32 zTopRight    = fixedToFloat( mFile->getHeight(x + 1, y + 1) );
+   F32  zBottomLeft, zBottomRight, zTopLeft, zTopRight;
+   mFile->getHeight4(
+      &zBottomLeft, &zBottomRight, &zTopLeft, &zTopRight,
+      Point2I( x, y ),
+      Point2I( x + 1, y ),
+      Point2I( x, y + 1 ),
+      Point2I( x + 1, y + 1 )
+   );
 
    matName = mFile->getMaterialName( xm, ym );
 
@@ -976,25 +995,6 @@ void TerrainBlock::_rebuildQuadtree()
    mCell->createPrimBuffer( &mPrimBuffer );
 }
 
-void TerrainBlock::_updateTextureIndex()
-{
-   U32 blockSize = getBlockSize();
-
-   for ( U32 row = 0; row < blockSize; row++ )        
-   {  
-      for ( U32 column = 0; column < blockSize; column++ )            
-      {
-         U32 index = ( blockSize - row - 1 ) + ( column * blockSize );
-         U32 layerIndex1 = (U32)mFile->getLayerIndex(row,column);
-        // U32 layerIndex2 = (U32)mFile->getLayerIndex(row-1,column-1);
-
-         TerrainSquare *sq = mFile->findSquare( 0, index);
-         sq->triangle1.materialIndex = layerIndex1;
-         sq->triangle2.materialIndex = layerIndex1;
-      }
-   }
-}
-
 void TerrainBlock::_updatePhysics()
 {
    if ( !PHYSICSMGR )
@@ -1017,8 +1017,6 @@ void TerrainBlock::_updatePhysics()
    }
    else
    {
-      
-      _updateTextureIndex();
       // Get empty state of each vert
       bool *holes = new bool[ getBlockSize() * getBlockSize() ];
       for ( U32 row = 0; row < getBlockSize(); row++ )
@@ -1026,12 +1024,10 @@ void TerrainBlock::_updatePhysics()
             holes[ row + (column * getBlockSize()) ] = mFile->isEmptyAt( row, column );
 
       colShape = PHYSICSMGR->createCollision();
-      colShape->addHeightfield( mFile->getHeightMap().address(), holes, getBlockSize(), mSquareSize, MatrixF::Identity, this );
+      colShape->addHeightfield( mFile->getHeightMap().address(), holes, getBlockSize(), mSquareSize, MatrixF::Identity );
 
       delete [] holes;
    }
-
-   
 
    PhysicsWorld *world = PHYSICSMGR->getWorld( isServerObject() ? "server" : "client" );
    mPhysicsRep = PHYSICSMGR->createBody();
