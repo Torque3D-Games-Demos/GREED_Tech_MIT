@@ -77,13 +77,15 @@ class StaticShape: public ShapeBase
    void _createPhysics();
 
    // BlissGMK >>
-   PhysicsBody *mPhysicsRep;
+   // this already exist at line 73
+   //PhysicsBody *mPhysicsRep;
 protected:
    enum MaskBits {
       PositionMask = Parent::NextFreeMask,	  
 	  // BlissGMK <<
-      PositionMask = Parent::NextFreeMask,	  
-      NextFreeMask = Parent::NextFreeMask << 1
+      // correction by dragutux
+	  PhysicsMask = Parent::NextFreeMask << 1,	  
+      NextFreeMask = Parent::NextFreeMask << 2
    };
 
 public:

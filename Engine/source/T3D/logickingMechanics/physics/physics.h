@@ -8,8 +8,8 @@
 #include "core/color.h"
 #include "sim/netConnection.h"
 
-#define PHYSICS_BULLET
-#define PHYSICS_PHYSX
+//#define PHYSICS_BULLET
+//#define PHYSICS_PHYSX
 
 class PhysShape;
 struct PhysInfo;
