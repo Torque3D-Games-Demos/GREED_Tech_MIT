@@ -51,7 +51,7 @@ deactivatePackage(TemplateFunctions);
 function cro()
 {
    new AIBot(orc) {
-      dataBlock = "SpaceOrcBotData";
+      dataBlock = "SoldierBotData";
       position = "530 660 256.41";
       rotation = "1 0 0 0";
       scale = "1 1 1";
@@ -67,7 +67,7 @@ function cro()
          invBlasterAmmo = "3000";
          Item = "HealthPatch";
          perceptionEnabled = "false";
-         templateName = "SpaceOrcBot";
+         templateName = "SoldierBot";
          viewDist = "40";
    };
 }

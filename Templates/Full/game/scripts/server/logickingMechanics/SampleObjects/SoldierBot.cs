@@ -1,10 +1,10 @@
 //-----------------------------------------------------------------------------
 // Copyright (C) LogicKing.com, Inc.
 //-----------------------------------------------------------------------------
-// SpaceOrc Bot
+// Soldier Bot
 //-----------------------------------------------------------------------------
 
-exec("art/shapes/actors/SpaceOrc/SpaceOrc.cs");
+exec("art/shapes/actors/Soldier/soldier_rigged.cs");
 
 
 datablock SFXDescription(AudioScream3d)
@@ -18,31 +18,31 @@ datablock SFXDescription(AudioScream3d)
    channel = $SimAudioType;
 };
 
-datablock SFXProfile(SpaceOrcSoundDeath)
+datablock SFXProfile(SoldierSoundDeath)
 {
-   fileName = "art/sound/spaceOrc_death";
+   fileName = "art/sound/Soldier_death";
    description = AudioScream3d;
    preload = true;
 };
 
 
-datablock SFXProfile(SpaceOrcSoundPain01)
+datablock SFXProfile(SoldierSoundPain01)
 {
-   fileName = "art/sound/spaceOrc_pain_01";
+   fileName = "art/sound/Soldier_pain_01";
    description = AudioScream3d;
    preload = true;
 };
 
-datablock SFXProfile(SpaceOrcSoundPain02)
+datablock SFXProfile(SoldierSoundPain02)
 {
-   fileName = "art/sound/spaceOrc_pain_02";
+   fileName = "art/sound/Soldier_pain_02";
    description = AudioScream3d;
    preload = true;
 };
 
 
 
-datablock PlayerData(SpaceOrcBotData : DefaultPlayerData)
+datablock PlayerData(SoldierBotData : DefaultPlayerData)
 {
    renderFirstPerson = false;
    emap = true;
@@ -55,17 +55,17 @@ datablock PlayerData(SpaceOrcBotData : DefaultPlayerData)
    maxSideSpeed = 5;
    jumpForce = 30.0 * 90;
 
-   shapeFile = "art/shapes/actors/SpaceOrc/SpaceOrc.dts";
+   shapeFile = "art/shapes/actors/Soldier/soldier_rigged.dae";
    
    category = "AI";
    className = "AiBotData";
    
-   deathSnd = SpaceOrcSoundDeath;
-   painSnd[0] = SpaceOrcSoundPain01;
-   painSnd[1] = SpaceOrcSoundPain02;
+   deathSnd = SoldierSoundDeath;
+   painSnd[0] = SoldierSoundPain01;
+   painSnd[1] = SoldierSoundPain02;
    painSndCount = 2;
    
-   ragdoll = "SpaceOrcRagDoll";
+   ragdoll = "SoldierRagDoll";
    
    weapon = BlasterGunImage;
    ammo = BlasterAmmo;
@@ -90,7 +90,7 @@ datablock PlayerData(SpaceOrcBotData : DefaultPlayerData)
    maxInv[BlasterAmmo] = 5000;
 };
 
-datablock PlayerData(SpaceOrcBotData2 : SpaceOrcBotData)
+datablock PlayerData(SoldierBotData2 : SoldierBotData)
 {
    weapon = RocketLauncherImage;
    ammo = RocketLauncherAmmo;
@@ -103,8 +103,8 @@ datablock PlayerData(SpaceOrcBotData2 : SpaceOrcBotData)
 // for Game Mechanics Editor
 //-----------------------------------------------------------------------------
 activatePackage(TemplateFunctions);
-inheritTemplate("SpaceOrcBot", "AiBot");
-registerTemplate("SpaceOrcBot", "AI", "AiBotData::create(SpaceOrcBotData); ");
-setTemplateField("SpaceOrcBot", "health", "100");
-setTemplateField("SpaceOrcBot", "item", "HealthPatch", "", "Misc", "An item that bot spawns on his death.");
+inheritTemplate("SoldierBot", "AiBot");
+registerTemplate("SoldierBot", "AI", "AiBotData::create(SoldierBotData); ");
+setTemplateField("SoldierBot", "health", "100");
+setTemplateField("SoldierBot", "item", "HealthPatch", "", "Misc", "An item that bot spawns on his death.");
 deactivatePackage(TemplateFunctions);

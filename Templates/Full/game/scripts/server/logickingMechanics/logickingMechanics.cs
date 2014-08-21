@@ -57,7 +57,4 @@ exec("./sampleObjects/ragDolls.cs");
 
 exec("./sampleObjects/softBodies.cs");
 
-exec("./sampleObjects/spaceOrcBot.cs");
-exec("./sampleObjects/elfBot.cs");
-
-//exec("./sampleObjects/blasterGun.cs");
+exec("./sampleObjects/SoldierBot.cs");
