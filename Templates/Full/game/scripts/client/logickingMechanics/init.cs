@@ -20,7 +20,7 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-moveMap.bind(keyboard, "e", useObject);
+GlobalActionMap.bind(keyboard, "e", useObject);
 
 // Used to call "use" method
 function useObject(%flg)

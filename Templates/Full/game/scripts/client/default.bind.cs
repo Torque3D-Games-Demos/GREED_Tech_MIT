@@ -758,5 +758,5 @@ function postFXGuiToggle(%val)
       }  
    }  
 }  
-moveMap.bind( keyboard, "alt m", postFXGuiToggle ); // replace with keystroke of your choosing
+GlobalActionMap.bind( keyboard, "alt m", postFXGuiToggle ); // replace with keystroke of your choosing
 // PostFx Library<<
