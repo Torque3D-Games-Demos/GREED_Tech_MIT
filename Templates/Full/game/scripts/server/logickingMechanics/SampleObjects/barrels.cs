@@ -43,7 +43,7 @@ datablock ParticleData(BarrelFire)
    textureCoords[2] = "1 1";
    textureCoords[3] = "1 0";
    animTexTiling = "0 0";
-   textureName = "art/shapes/particles/smoke";
+   textureName = "art/particles/smoke";
    colors[0] = "1 0.4 0 0.5";
    colors[1] = "1 0.3 0 0";
    colors[2] = "1 0.3 0 0";

@@ -5,6 +5,7 @@
 // Add categories for Editor to 
 ActivatePackage(TemplateFunctions);
 
+addCategory("GuideBot", "tools/LogickingEditor/images/AI");
 addCategory("AI", "tools/LogickingEditor/images/AI");
 addCategory("Triggers", "tools/LogickingEditor/images/Trigger");
 addCategory("Breakables", "tools/LogickingEditor/images/Breakable");
