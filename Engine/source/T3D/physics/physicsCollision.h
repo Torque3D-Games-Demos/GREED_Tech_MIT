@@ -84,12 +84,13 @@ public:
                                  F32 metersPerSample,
                                  const MatrixF &localXfm ) = 0;
 
-   /// Add a heightfield to the collision shape. Supports per triangle terrain materials.
+  /*need an ifdef : this is for physx3 ?
+  /// Add a heightfield to the collision shape. Supports per triangle terrain materials.
    virtual bool addHeightfield(  const U16 *heights,
                                  const bool *holes,
                                  U32 blockSize,
                                  F32 metersPerSample,
-                                 const MatrixF &localXfm,const TerrainBlock *block )=0;
+                                 const MatrixF &localXfm,const TerrainBlock *block )=0;*/
 };
 
 #endif // _T3D_PHYSICS_PHYSICSCOLLISION_H_

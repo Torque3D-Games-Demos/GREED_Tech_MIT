@@ -134,9 +134,9 @@ public:
    virtual PhysicsWorld* getWorld( const String &worldName ) const = 0;
 
    // andrewmac: Cloth
-   virtual PhysicsCloth* createCloth(TSShapeInstance* shapeInst, const MatrixF &transform) = 0;
+//   virtual PhysicsCloth* createCloth(TSShapeInstance* shapeInst, const MatrixF &transform) = 0;
 
-   virtual PhysicsMaterial* createMaterial(const F32 restitution,const F32 staticFriction,const F32 dynamicFritction)=0;
+//   virtual PhysicsMaterial* createMaterial(const F32 restitution,const F32 staticFriction,const F32 dynamicFritction)=0;
 
 protected:
 

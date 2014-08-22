@@ -356,8 +356,10 @@ bool TSStatic::_createShape()
     if ( mAmbientThread )
         mShapeInstance->setSequence( mAmbientThread, ambientSeq, 0);
 
-    if ( mClothEnabled )
+    /*need an ifdef : this is for physx3 ?
+	if ( mClothEnabled )
         _enableCloth();
+	*/
 
     return true;
 }
@@ -415,9 +417,11 @@ void TSStatic::_updatePhysics()
 void TSStatic::onRemove()
 {
     SAFE_DELETE( mPhysicsRep );
-    // andrewmac : Cloth
+    /*need an ifdef : this is for physx3 ?
+	// andrewmac : Cloth
    	if ( mClothEnabled )
         _disableCloth();
+		*/
 
     mConvexList->nukeList();
 
@@ -730,7 +734,7 @@ void TSStatic::unpackUpdate(NetConnection *con, BitStream *stream)
    {
       mLightPlugin->unpackUpdate(this, con, stream);
    }
-
+   /*need an ifdef : this is for physx3 ?
    // andrewmac: Cloth
    bool clothFlag = stream->readFlag();
    if ( clothFlag != mClothEnabled )
@@ -740,6 +744,7 @@ void TSStatic::unpackUpdate(NetConnection *con, BitStream *stream)
        else
            _disableCloth();
    }
+   */
 
    // andrewmac: Physics Options
    bool physicsRepFlag = stream->readFlag();
@@ -1210,7 +1215,7 @@ DefineEngineMethod( TSStatic, getModelFile, const char *, (),,
 {
 	return object->getShapeFileName();
 }
-
+/*
 // andrewmac: cloth
 void TSStatic::_enableCloth()
 {
@@ -1227,4 +1232,4 @@ void TSStatic::_disableCloth()
         mCloth->release();
         SAFE_DELETE(mCloth);
     }
-}
+}*/

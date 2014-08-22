@@ -1026,7 +1026,10 @@ void TerrainBlock::_updatePhysics()
             holes[ row + (column * getBlockSize()) ] = mFile->isEmptyAt( row, column );
 
       colShape = PHYSICSMGR->createCollision();
-      colShape->addHeightfield( mFile->getHeightMap().address(), holes, getBlockSize(), mSquareSize, MatrixF::Identity, this );
+      colShape->addHeightfield( mFile->getHeightMap().address(), holes, getBlockSize(), mSquareSize, MatrixF::Identity );
+	  /*need an ifdef : this is for physx3 ?
+	  colShape->addHeightfield( mFile->getHeightMap().address(), holes, getBlockSize(), mSquareSize, MatrixF::Identity, this );
+	  */
 
       delete [] holes;
    }

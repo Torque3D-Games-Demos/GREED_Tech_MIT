@@ -31,8 +31,9 @@
 
 IMPLEMENT_CONOBJECT( TerrainMaterial );
 
+/*need an ifdef : this is for physx3 ?
 Vector<TerrainMaterial*> TerrainMaterial::smAllTerrainMaterials;
-
+*/
 ConsoleDocClass( TerrainMaterial,
 	"@brief The TerrainMaterial class orginizes the material settings "
 	"for a single terrain material layer.\n\n"
@@ -69,25 +70,32 @@ TerrainMaterial::TerrainMaterial()
       mMacroSize( 200.0f ),
       mMacroStrength( 0.7f ),
       mMacroDistance( 500.0f ),
+	  mParallaxScale( 0.0f ) // original block stops here.
+
+	  /*need an ifdef : this is for physx3 ?
       mParallaxScale( 0.0f ),
       mPhysicsMaterial(NULL),
       mRestitution(0.1f),
       mStaticFriction(0.6f),
       mRestitutionCombine(S32(PhysicsMaterial::Average)),
       mFrictionCombine(S32(PhysicsMaterial::Average)),
-      mDynamicFriction( 0.4f)
+      mDynamicFriction( 0.4f)*/
 {
+   /*need an ifdef : this is for physx3 ?
    createPhysicsMaterial();
    updatePhysicsMaterial();
    smAllTerrainMaterials.push_back( this );
+   */
 }
 
 TerrainMaterial::~TerrainMaterial()
 {
+   /*need an ifdef : this is for physx3 ?
    if(mPhysicsMaterial)
       SAFE_DELETE(mPhysicsMaterial);
 
    smAllTerrainMaterials.remove( this );
+   */
 }
 
 void TerrainMaterial::initPersistFields()
@@ -115,6 +123,7 @@ void TerrainMaterial::initPersistFields()
 	   "occlusion effect (aka parallax) to the terrain material" );
 
 
+	/*need an ifdef : this is for physx3 ?
 	addGroup("PhysicsMaterial");
 
 	addField("restitution", TypeF32, Offset(mRestitution, TerrainMaterial),
@@ -139,16 +148,19 @@ void TerrainMaterial::initPersistFields()
 
 	endGroup("PhysicsMaterial");
 
+   */
    Parent::initPersistFields();
+
    // Gotta call this at least once or it won't get created!
    Sim::getTerrainMaterialSet();
 }
 
+/*need an ifdef : this is for physx3 ?
 PhysicsMaterial *TerrainMaterial::getPhysicsMaterial()
 {
    AssertFatal(mPhysicsMaterial,"TerrainMaterial::getPhysicsMaterial");
    return mPhysicsMaterial;
-}
+}*/
 
 bool TerrainMaterial::onAdd()
 {
@@ -176,7 +188,7 @@ TerrainMaterial* TerrainMaterial::getWarningMaterial()
 { 
    return findOrCreate( NULL );
 }
-
+/*need an ifdef : this is for physx3 ?
 void TerrainMaterial::updatePhysicsMaterial()
 {
 	if (PHYSICSMGR)
@@ -193,7 +205,7 @@ void TerrainMaterial::createPhysicsMaterial()
 		if (!mPhysicsMaterial)
 			mPhysicsMaterial = PHYSICSMGR->createMaterial(mRestitution, mStaticFriction, mDynamicFriction);
 	}
-}
+}*/
 
 TerrainMaterial* TerrainMaterial::findOrCreate( const char *nameOrPath )
 {
@@ -201,14 +213,16 @@ TerrainMaterial* TerrainMaterial::findOrCreate( const char *nameOrPath )
    
    if ( !nameOrPath || !nameOrPath[0] )
       nameOrPath = "warning_material";
-
+   
    // See if we can just find it.
    TerrainMaterial *mat = dynamic_cast<TerrainMaterial*>( set->findObjectByInternalName( StringTable->insert( nameOrPath ) ) );
+   
    if ( mat )
+   /*need an ifdef : this is for physx3 ?
    {
       mat->updatePhysicsMaterial();
-      return mat;
-   }
+      */return mat;/* // oppa hacking style!
+   }*/
 
    // We didn't find it... so see if its a path to a
    // file.  If it is lets assume its the texture.
@@ -218,7 +232,9 @@ TerrainMaterial* TerrainMaterial::findOrCreate( const char *nameOrPath )
       mat->setInternalName( nameOrPath );
       mat->mDiffuseMap = nameOrPath;
       mat->registerObject();
-      mat->updatePhysicsMaterial();
+      /*need an ifdef : this is for physx3 ?
+	  mat->updatePhysicsMaterial();
+	  */
       Sim::getRootGroup()->addObject( mat );
       
       return mat;
@@ -240,7 +256,9 @@ TerrainMaterial* TerrainMaterial::findOrCreate( const char *nameOrPath )
       mat->mMacroMap = GFXTextureManager::getWarningTexturePath();
       mat->mMacroSize = 200;
       mat->registerObject();
-      mat->updatePhysicsMaterial();
+      /*need an ifdef : this is for physx3 ?
+	  mat->updatePhysicsMaterial();
+	  */
       Sim::getRootGroup()->addObject( mat );
    }
 
