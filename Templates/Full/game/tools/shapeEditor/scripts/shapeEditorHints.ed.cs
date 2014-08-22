@@ -57,12 +57,12 @@ new SimGroup (ShapeHintGroup)
    new ScriptObject()
    {
       objectType = "Player";
-      node0 = "Bip01 Pelvis" TAB "";
-      node1 = "Bip01 Spine" TAB "";
-      node2 = "Bip01 Spine1" TAB "";
-      node3 = "Bip01 Spine2" TAB "";
-      node4 = "Bip01 Neck" TAB "";
-      node5 = "Bip01 Head" TAB "";
+      node0 = "Bip01_Pelvis" TAB "";
+      node1 = "Bip01_Spine" TAB "";
+      node2 = "Bip01_Spine1" TAB "";
+      node3 = "Bip01_Spine2" TAB "";
+      node4 = "Bip01_Neck" TAB "";
+      node5 = "Bip01_Head" TAB "";
 
       sequence0 = "head" TAB "Vertical head movement (for looking) (start=full up, end=full down)";
       sequence1 = "headside" TAB "Horizontal head movement (for looking) (start=full left, end=full right)";
