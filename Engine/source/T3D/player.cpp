@@ -517,12 +517,12 @@ bool PlayerData::preload(bool server, String &errorStr)
             lookAction = c;
 
       // Resolve spine
-      spineNode[0] = mShape->findNode("Bip01 Pelvis");
-      spineNode[1] = mShape->findNode("Bip01 Spine");
-      spineNode[2] = mShape->findNode("Bip01 Spine1");
-      spineNode[3] = mShape->findNode("Bip01 Spine2");
-      spineNode[4] = mShape->findNode("Bip01 Neck");
-      spineNode[5] = mShape->findNode("Bip01 Head");
+      spineNode[0] = mShape->findNode("Bip01_Pelvis");
+      spineNode[1] = mShape->findNode("Bip01_Spine");
+      spineNode[2] = mShape->findNode("Bip01_Spine1");
+      spineNode[3] = mShape->findNode("Bip01_Spine2");
+      spineNode[4] = mShape->findNode("Bip01_Neck");
+      spineNode[5] = mShape->findNode("Bip01_Head");
 
       // Recoil animations
       recoilSequence[0] = mShape->findSequence("light_recoil");
@@ -6588,12 +6588,12 @@ DefineEngineMethod( Player, setActionThread, bool, ( const char* name, bool hold
    "@return True if succesful, false if failed\n"
    
    "@note The spine nodes for the Player's shape are named as follows:\n\n<ul>"
-   "<li>Bip01 Pelvis</li>"
-   "<li>Bip01 Spine</li>"
-   "<li>Bip01 Spine1</li>"
-   "<li>Bip01 Spine2</li>"
-   "<li>Bip01 Neck</li>"
-   "<li>Bip01 Head</li></ul>\n\n"
+   "<li>Bip01_Pelvis</li>"
+   "<li>Bip01_Spine</li>"
+   "<li>Bip01_Spine1</li>"
+   "<li>Bip01_Spine2</li>"
+   "<li>Bip01_Neck</li>"
+   "<li>Bip01_Head</li></ul>\n\n"
    
    "You cannot use setActionThread() to have the Player play one of the motion "
    "determined action animation sequences.  These sequences are chosen based on how "

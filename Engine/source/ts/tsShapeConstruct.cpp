@@ -704,8 +704,8 @@ DefineTSShapeConstructorMethod( getNodeIndex, S32, ( const char* name ),,
    "@param name name of the node to lookup.\n"
    "@return the index of the named node, or -1 if no such node exists.\n\n"
    "@tsexample\n"
-   "// get the index of Bip01 Pelvis node in the shape\n"
-   "%index = %this.getNodeIndex( \"Bip01 Pelvis\" );\n"
+   "// get the index of Bip01_Pelvis node in the shape\n"
+   "%index = %this.getNodeIndex( \"Bip01_Pelvis\" );\n"
    "@endtsexample\n" )
 {
    return mShape->findNode( name );
@@ -734,7 +734,7 @@ DefineTSShapeConstructorMethod( getNodeParentName, const char*, ( const char* na
    "@param name name of the node to query.\n"
    "@return the name of the node's parent, or \"\" if the node is at the root level\n\n"
    "@tsexample\n"
-   "echo( \"Bip01 Pelvis parent = \" @ %this.getNodeParentName( \"Bip01 Pelvis \") );\n"
+   "echo( \"Bip01_Pelvis parent = \" @ %this.getNodeParentName( \"Bip01_Pelvis \") );\n"
    "@endtsexample\n" )
 {
    GET_NODE_INDEX_NO_ROOT( getNodeParentName, node, name, "" );
@@ -752,7 +752,7 @@ DefineTSShapeConstructorMethod( setNodeParent, bool, ( const char* name, const c
   "@param parentName name of the parent node to set (use \"\" to move the node to the root level)\n"
   "@return true if successful, false if failed\n\n"
   "@tsexample\n"
-  "%this.setNodeParent( \"Bip01 Pelvis\", \"start01\" );\n"
+  "%this.setNodeParent( \"Bip01_Pelvis\", \"start01\" );\n"
   "@endtsexample\n" )
 {
    GET_NODE_INDEX_NO_ROOT( setNodeParent, node, name, false );
@@ -770,7 +770,7 @@ DefineTSShapeConstructorMethod( getNodeChildCount, S32, ( const char* name ),,
    "@param name name of the node to query.\n"
    "@return the number of child nodes.\n\n"
    "@tsexample\n"
-   "%count = %this.getNodeChildCount( \"Bip01 Pelvis\" );\n"
+   "%count = %this.getNodeChildCount( \"Bip01_Pelvis\" );\n"
    "@endtsexample\n" )
 {
    GET_NODE_INDEX_ALLOW_ROOT( getNodeChildCount, node, name, 0 );
@@ -823,7 +823,7 @@ DefineTSShapeConstructorMethod( getNodeObjectCount, S32, ( const char* name ),,
    "@param name name of the node to query.\n"
    "@return the number of attached objects.\n\n"
    "@tsexample\n"
-   "%count = %this.getNodeObjectCount( \"Bip01 Head\" );\n"
+   "%count = %this.getNodeObjectCount( \"Bip01_Head\" );\n"
    "@endtsexample\n" )
 {
    GET_NODE_INDEX_ALLOW_ROOT( getNodeObjectCount, node, name, 0 );
@@ -841,9 +841,9 @@ DefineTSShapeConstructorMethod( getNodeObjectName, const char*, ( const char* na
    "@return the name of the indexed object.\n\n"
    "@tsexample\n"
    "// print the names of all objects attached to the node\n"
-   "%count = %this.getNodeObjectCount( \"Bip01 Head\" );\n"
+   "%count = %this.getNodeObjectCount( \"Bip01_Head\" );\n"
    "for ( %i = 0; %i < %count; %i++ )\n"
-   "   echo( %this.getNodeObjectName( \"Bip01 Head\", %i ) );\n"
+   "   echo( %this.getNodeObjectName( \"Bip01_Head\", %i ) );\n"
    "@endtsexample\n" )
 {
    GET_NODE_INDEX_ALLOW_ROOT( getNodeObjectName, node, name, "" );
@@ -949,7 +949,7 @@ DefineTSShapeConstructorMethod( renameNode, bool, ( const char* oldName, const c
    "@param newName new name of the node\n"
    "@return true if successful, false otherwise\n\n"
    "@tsexample\n"
-   "%this.renameNode( \"Bip01 L Hand\", \"mount5\" );\n"
+   "%this.renameNode( \"Bip01_L Hand\", \"mount5\" );\n"
    "@endtsexample\n" )
 {
    GET_NODE_INDEX_NO_ROOT( renameNode, node, oldName, false );
@@ -973,9 +973,9 @@ DefineTSShapeConstructorMethod( addNode, bool, ( const char* name, const char* p
    "treated as relative to the node's parent.\n"
    "@return true if successful, false otherwise\n\n"
    "@tsexample\n"
-   "%this.addNode( \"Nose\", \"Bip01 Head\", \"0 2 2 0 0 1 0\" );\n"
+   "%this.addNode( \"Nose\", \"Bip01_Head\", \"0 2 2 0 0 1 0\" );\n"
    "%this.addNode( \"myRoot\", \"\", \"0 0 4 0 0 1 1.57\" );\n"
-   "%this.addNode( \"Nodes\", \"Bip01 Head\", \"0 2 0 0 0 1 0\", true );\n"
+   "%this.addNode( \"Nodes\", \"Bip01_Head\", \"0 2 0 0 0 1 0\", true );\n"
    "@endtsexample\n" )
 {
    Point3F pos( txfm.getPosition() );
@@ -1125,7 +1125,7 @@ DefineTSShapeConstructorMethod( setObjectNode, bool, ( const char* objName, cons
    "@param nodeName name of the node to attach the object to\n"
    "@return true if successful, false otherwise\n\n"
    "@tsexample\n"
-   "%this.setObjectNode( \"Hand\", \"Bip01 LeftHand\" );\n"
+   "%this.setObjectNode( \"Hand\", \"Bip01_LeftHand\" );\n"
    "@endtsexample\n" )
 {
    if ( !mShape->setObjectNode( objName, nodeName ) )
