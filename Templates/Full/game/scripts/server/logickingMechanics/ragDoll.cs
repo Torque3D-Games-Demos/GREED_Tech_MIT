@@ -1,9 +1,27 @@
 //-----------------------------------------------------------------------------
-// Logicking's Game Factory
+// Copyright (C) 2014 J0linar [7Sins]
 // Copyright (C) Logicking.com, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-//---------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 function RagDollData::create(%block)
 {   
 	// The mission editor invokes this method when it wants to create   
@@ -27,7 +45,7 @@ function createRagDoll(%ragdollData, %obj)
    %force = VectorSub(%obj.getPosition(), %obj.damagePos);
    %force = setWord(%force,2,0);
    %force = VectorNormalize(%force);
-   %force = VectorScale(%force,1500);
+   %force = VectorScale(%force,6500);
    %ragDoll_obj.applyImpulse(%obj.damagePos,%force);
    //%ragDoll_obj.applyImpulse(%obj.damagePos, "1500 0 0");
 
@@ -103,7 +121,7 @@ function rag()
             {
 					position = "530 660 256.41";
 					rotation = "1 0 0 0";
-					dataBlock = SpaceOrcRagDoll;
+					dataBlock = SoldierRagDoll;
 		};
 }
 
