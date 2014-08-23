@@ -108,27 +108,63 @@ datablock RagDollData(SoldierRagDoll)
 	boneOffset[8] = "0 0 0";
 	boneJointType[8] = $JointType::Hinge;
 	boneJointParam[8] = "-1.57 0 0";
-
-	//right leg
-	//upper
-	boneParentNodeName[9] = "Bip01_Pelvis";
-	boneNodeName[9] = "Bip01_R_Thigh";
+	
+	boneParentNodeName[9] = "Bip01_L_Calf";
+	boneNodeName[9] = "Bip01_L_Foot";
 	boneSize[9] = "0.2 0.4 0.0";
-	boneMass[9] = 1;//7;
+	boneMass[9] = 1;
 	boneShape[9] = $ShapeType::Capsule;
 	boneOffset[9] = "0 0 0";
-	boneJointType[9] = $JointType::ConeTwist;
-	boneJointParam[9] = "0.785 -0.785 0.785";
-	//lower
+	boneJointType[9] = $JointType::Hinge;
+	boneJointParam[9] = "-1.57 0 0";
 	
-	boneParentNodeName[10] = "Bip01_R_Thigh";
-	boneNodeName[10] = "Bip01_R_Calf";
+	boneParentNodeName[10] = "Bip01_L_Foot";
+	boneNodeName[10] = "Bip01_L_Toe0";
 	boneSize[10] = "0.2 0.4 0.0";
 	boneMass[10] = 1;
 	boneShape[10] = $ShapeType::Capsule;
 	boneOffset[10] = "0 0 0";
 	boneJointType[10] = $JointType::Hinge;
-	boneJointParam[10] = "-1.57 0 0";
+	boneJointParam[110] = "-1.57 0 0";
+	
+	//right leg
+	//upper
+	boneParentNodeName[11] = "Bip01_Pelvis";
+	boneNodeName[11] = "Bip01_R_Thigh";
+	boneSize[11] = "0.2 0.4 0.0";
+	boneMass[11] = 1;//7;
+	boneShape[11] = $ShapeType::Capsule;
+	boneOffset[11] = "0 0 0";
+	boneJointType[11] = $JointType::ConeTwist;
+	boneJointParam[11] = "0.785 -0.785 0.785";
+	//lower
+	
+	boneParentNodeName[12] = "Bip01_R_Thigh";
+	boneNodeName[12] = "Bip01_R_Calf";
+	boneSize[12] = "0.2 0.4 0.0";
+	boneMass[12] = 1;
+	boneShape[12] = $ShapeType::Capsule;
+	boneOffset[12] = "0 0 0";
+	boneJointType[12] = $JointType::Hinge;
+	boneJointParam[12] = "-1.57 0 0";
+	
+	boneParentNodeName[13] = "Bip01_R_Calf";
+	boneNodeName[13] = "Bip01_R_Foot";
+	boneSize[13] = "0.2 0.4 0.0";
+	boneMass[13] = 1;
+	boneShape[13] = $ShapeType::Capsule;
+	boneOffset[13] = "0 0 0";
+	boneJointType[13] = $JointType::Hinge;
+	boneJointParam[13] = "-1.57 0 0";
+	
+	boneParentNodeName[14] = "Bip01_R_Foot";
+	boneNodeName[14] = "Bip01_R_Toe0";
+	boneSize[14] = "0.2 0.4 0.0";
+	boneMass[14] = 1;
+	boneShape[14] = $ShapeType::Capsule;
+	boneOffset[14] = "0 0 0";
+	boneJointType[14] = $JointType::Hinge;
+	boneJointParam[14] = "-1.57 0 0";
 };
 
 // To inherit from the SoldierRagdoll, your model should have the same bone
