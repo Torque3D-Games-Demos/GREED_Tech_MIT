@@ -356,10 +356,11 @@ bool TSStatic::_createShape()
     if ( mAmbientThread )
         mShapeInstance->setSequence( mAmbientThread, ambientSeq, 0);
 
-    /*need an ifdef : this is for physx3 ?
+#ifdef TORQUE_PHYSICS_PHYSX3
+// final dual physx patch
 	if ( mClothEnabled )
         _enableCloth();
-	*/
+#endif
 
     return true;
 }
@@ -417,11 +418,12 @@ void TSStatic::_updatePhysics()
 void TSStatic::onRemove()
 {
     SAFE_DELETE( mPhysicsRep );
-    /*need an ifdef : this is for physx3 ?
+#ifdef TORQUE_PHYSICS_PHYSX3
+// final dual physx patch
 	// andrewmac : Cloth
    	if ( mClothEnabled )
         _disableCloth();
-		*/
+#endif
 
     mConvexList->nukeList();
 
@@ -497,10 +499,12 @@ void TSStatic::reSkin()
 
 void TSStatic::processTick( const Move *move )
 {
+#ifdef TORQUE_PHYSICS_PHYSX3
+// final dual physx patch
     // andrewmac : Cloth
    	if ( mClothEnabled && mCloth )
         mCloth->processTick();
-    
+#endif    
 	// Die gracefully.
     if ( !(mPlayAmbient && mAmbientThread) ) return;
 
@@ -734,7 +738,8 @@ void TSStatic::unpackUpdate(NetConnection *con, BitStream *stream)
    {
       mLightPlugin->unpackUpdate(this, con, stream);
    }
-   /*need an ifdef : this is for physx3 ?
+#ifdef TORQUE_PHYSICS_PHYSX3
+// final dual physx patch
    // andrewmac: Cloth
    bool clothFlag = stream->readFlag();
    if ( clothFlag != mClothEnabled )
@@ -744,11 +749,11 @@ void TSStatic::unpackUpdate(NetConnection *con, BitStream *stream)
        else
            _disableCloth();
    }
-   */
+#endif
 
    // andrewmac: Physics Options
    bool physicsRepFlag = stream->readFlag();
-   if ( physicsRepFlag != mEnablePhysicsRep )
+   if ( physicsRepFlag != mEnablePhysicsRep ) // investigate this : it is not that simple!
    {
         mEnablePhysicsRep = physicsRepFlag;
         _updatePhysics();
@@ -1215,7 +1220,9 @@ DefineEngineMethod( TSStatic, getModelFile, const char *, (),,
 {
 	return object->getShapeFileName();
 }
-/*
+
+#ifdef TORQUE_PHYSICS_PHYSX3
+// final dual physx patch
 // andrewmac: cloth
 void TSStatic::_enableCloth()
 {
@@ -1232,4 +1239,5 @@ void TSStatic::_disableCloth()
         mCloth->release();
         SAFE_DELETE(mCloth);
     }
-}*/
+}
+#endif

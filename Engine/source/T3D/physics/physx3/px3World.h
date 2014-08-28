@@ -68,7 +68,7 @@ protected:
 	static physx::PxCooking *smCooking;
 	static physx::PxProfileZoneManager* smProfileZoneManager;
 	static physx::PxDefaultCpuDispatcher* smCpuDispatcher;
-	static physx::PxVisualDebuggerConnection* smPvdConnection;
+	//static physx::PxVisualDebuggerConnection* smPvdConnection;
    static F32 smPhysicsStepTime;
    static U32 smPhysicsMaxIterations;
 	F32 mAccumulator;

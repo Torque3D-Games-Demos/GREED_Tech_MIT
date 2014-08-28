@@ -40,6 +40,7 @@ Px3Body::Px3Body() :
    mIsEnabled( true ),
    mIsStatic(false)
 {
+	// is empty..
 }
 
 Px3Body::~Px3Body()

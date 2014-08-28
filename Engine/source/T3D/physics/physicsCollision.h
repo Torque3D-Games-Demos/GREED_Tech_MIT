@@ -76,21 +76,23 @@ public:
                                  const U32 *index,
                                  U32 triCount,
                                  const MatrixF &localXfm ) = 0;
-
+#ifndef TORQUE_PHYSICS_PHYSX3
+// final dual physx patch
    /// Add a heightfield to the collision shape.
    virtual bool addHeightfield(  const U16 *heights,
                                  const bool *holes,
                                  U32 blockSize,
                                  F32 metersPerSample,
                                  const MatrixF &localXfm ) = 0;
-
-  /*need an ifdef : this is for physx3 ?
+#else
+// final dual physx patch
   /// Add a heightfield to the collision shape. Supports per triangle terrain materials.
    virtual bool addHeightfield(  const U16 *heights,
                                  const bool *holes,
                                  U32 blockSize,
                                  F32 metersPerSample,
-                                 const MatrixF &localXfm,const TerrainBlock *block )=0;*/
+                                 const MatrixF &localXfm, const TerrainBlock *block )=0;
+#endif
 };
 
 #endif // _T3D_PHYSICS_PHYSICSCOLLISION_H_
