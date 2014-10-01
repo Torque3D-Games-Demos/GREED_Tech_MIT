@@ -94,24 +94,24 @@ bool Px3Body::init(   PhysicsCollision *shape,
    const bool isTrigger = mBodyFlags & BF_TRIGGER;
    const bool isDebris = mBodyFlags & BF_DEBRIS;
 
-   if ( isKinematic )
+   if ( isKinematic ) // usual call is gPhysics3SDK with either : createRigidDynamic (differenciable by mass) / createRigidStatic (no mass ?) (2 types)
    {
-		mActor = gPhysics3SDK->createRigidDynamic(physx::PxTransform(physx::PxIDENTITY()));
-		physx::PxRigidDynamic *actor = mActor->is<physx::PxRigidDynamic>();
-		actor->setRigidDynamicFlag(physx::PxRigidDynamicFlag::eKINEMATIC, true);
-		actor->setMass(getMax( mass, 1.0f ));
+		mActor = gPhysics3SDK->createRigidDynamic(physx::PxTransform(physx::PxIDENTITY())); // gPhysics3SDK 1st call
+		physx::PxRigidDynamic *actor = mActor->is<physx::PxRigidDynamic>(); // actually a PxRigidActor
+		actor->setRigidDynamicFlag(physx::PxRigidDynamicFlag::eKINEMATIC, true); // flags
+		actor->setMass(getMax( mass, 1.0f )); // flags
    }
    else if ( mass > 0.0f )
    {
-      mActor = gPhysics3SDK->createRigidDynamic(physx::PxTransform(physx::PxIDENTITY()));
+      mActor = gPhysics3SDK->createRigidDynamic(physx::PxTransform(physx::PxIDENTITY())); // gPhysics3SDK 2nd call for body with a mass superior to 0
    }
    else
    {
-      mActor = gPhysics3SDK->createRigidStatic(physx::PxTransform(physx::PxIDENTITY()));
-      mIsStatic = true;
+      mActor = gPhysics3SDK->createRigidStatic(physx::PxTransform(physx::PxIDENTITY())); // gPhysics3SDK 3rd call define static actors.. to check !!!
+      mIsStatic = true; // so we have this flag : i want to query it
 	}
 
-   mMaterial = gPhysics3SDK->createMaterial(0.6f,0.4f,0.1f);
+   mMaterial = gPhysics3SDK->createMaterial(0.6f,0.4f,0.1f); // gPhysics3SDK 4th call
   
    // Add all the shapes.
    const Vector<Px3CollisionDesc*> &shapes = mColShape->getShapes();

@@ -51,7 +51,7 @@ enum Px3CollisionGroup
 class Px3World : public PhysicsWorld
 {
 protected:
-
+	// declarations of PX3 are here for some (need refactoring)
 	physx::PxScene* mScene;
 	bool mIsEnabled;
 	bool mIsSimulating;
@@ -68,7 +68,7 @@ protected:
 	static physx::PxCooking *smCooking;
 	static physx::PxProfileZoneManager* smProfileZoneManager;
 	static physx::PxDefaultCpuDispatcher* smCpuDispatcher;
-	//static physx::PxVisualDebuggerConnection* smPvdConnection;
+	static physx::PxVisualDebuggerConnection* smPvdConnection;
    static F32 smPhysicsStepTime;
    static U32 smPhysicsMaxIterations;
 	F32 mAccumulator;

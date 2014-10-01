@@ -41,14 +41,14 @@
 #include "gfx/sim/debugDraw.h"
 #include "gfx/primBuilder.h"
 
-
+// why is all this shit here ??
 physx::PxPhysics* gPhysics3SDK = NULL;
 physx::PxCooking* Px3World::smCooking = NULL;
 physx::PxFoundation* Px3World::smFoundation = NULL;
 physx::PxProfileZoneManager* Px3World::smProfileZoneManager = NULL;
 physx::PxDefaultCpuDispatcher* Px3World::smCpuDispatcher=NULL;
 Px3ConsoleStream* Px3World::smErrorCallback = NULL;
-//physx::PxVisualDebuggerConnection* Px3World::smPvdConnection=NULL;
+physx::PxVisualDebuggerConnection* Px3World::smPvdConnection=NULL;
 physx::PxDefaultAllocator Px3World::smMemoryAlloc;
 //Physics timing
 F32 Px3World::smPhysicsStepTime = 1.0f/(F32)TickMs;
@@ -106,8 +106,8 @@ bool Px3World::restartSDK( bool destroyOnly, Px3World *clientWorld, Px3World *se
 	if ( clientWorld || serverWorld )
 		return false;
 
-	/*if(smPvdConnection)
-		smPvdConnection->release();*/
+	if(smPvdConnection)
+		smPvdConnection->release();
 
 	if(smCooking)
 		smCooking->release();
@@ -182,11 +182,13 @@ bool Px3World::restartSDK( bool destroyOnly, Px3World *clientWorld, Px3World *se
 	}
 
    //just for testing-must remove, should really be enabled via console like physx 2 plugin
+	
 #ifdef TORQUE_DEBUG
-	/*physx::PxVisualDebuggerConnectionFlags connectionFlags(physx::PxVisualDebuggerExt::getAllConnectionFlags());
+	physx::PxVisualDebuggerConnectionFlags connectionFlags(physx::PxVisualDebuggerExt::getAllConnectionFlags());
 	smPvdConnection = physx::PxVisualDebuggerExt::createConnection(gPhysics3SDK->getPvdConnectionManager(), 
-				"localhost", 5425, 100, connectionFlags);	*/
+				"localhost", 5425, 100, connectionFlags);
 #endif
+	
 
 	return true;
 }

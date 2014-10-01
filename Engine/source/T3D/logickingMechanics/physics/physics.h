@@ -34,9 +34,9 @@ public:
 	virtual PhysShape* createPhysShape(void* vBuffer,int vNum,int vStride, 
 										void* iBuffer, int iNum, int triStride) = 0;
 
-	virtual PhysShape* createPhysShapeSoft(const PhysSoftInfo& descr);
+	//virtual PhysShape* (const PhysSoftInfo& descr);
 
-	virtual PhysJoint* createPhysJoint(PhysJointInfo& descr) = 0;
+	//virtual PhysJoint* createPhysJoint(PhysJointInfo& descr) = 0;
 	
 	static PhysLib getPhysicsLib();
 

@@ -88,5 +88,5 @@ void Px3ConsoleStream::reportError( physx::PxErrorCode code, const char *message
 	UTF8 info[1024];
 	dSprintf( info, 1024, "File: %s\nLine: %d\n%s", file, line, message );
 	Platform::AlertOK( "PhysX Error", info );
-	// Con::printf( "PhysX Error:\n   %s(%d) : %s\n", file, line, message );
+	Con::errorf( "PhysX Error:\n   %s(%d) : %s\n", file, line, message );
 }

@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------
-// Copyright 2008 (C) LogicKing.com, Inc.
+// Copyright 2013-2014 Galmateon-Studios, All rights reserved.
 //-----------------------------------------------------------------------------
-
+//--
 #ifndef _PHYSJOINT_H_
 #define _PHYSJOINT_H_
 

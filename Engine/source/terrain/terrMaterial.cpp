@@ -31,9 +31,11 @@
 
 IMPLEMENT_CONOBJECT( TerrainMaterial );
 
-/*need an ifdef : this is for physx3 ?
-Vector<TerrainMaterial*> TerrainMaterial::smAllTerrainMaterials;
-*/
+#ifdef TORQUE_PHYSICS_PHYSX3
+// final dual physx patch
+	Vector<TerrainMaterial*> TerrainMaterial::smAllTerrainMaterials;
+#endif
+
 ConsoleDocClass( TerrainMaterial,
 	"@brief The TerrainMaterial class orginizes the material settings "
 	"for a single terrain material layer.\n\n"
@@ -70,32 +72,33 @@ TerrainMaterial::TerrainMaterial()
       mMacroSize( 200.0f ),
       mMacroStrength( 0.7f ),
       mMacroDistance( 500.0f ),
-	  mParallaxScale( 0.0f ) // original block stops here.
-
-	  /*need an ifdef : this is for physx3 ?
-      mParallaxScale( 0.0f ),
+	  mParallaxScale( 0.0f )
+#ifdef TORQUE_PHYSICS_PHYSX3 // original block stops here.
+	  , // separator 
       mPhysicsMaterial(NULL),
       mRestitution(0.1f),
       mStaticFriction(0.6f),
       mRestitutionCombine(S32(PhysicsMaterial::Average)),
       mFrictionCombine(S32(PhysicsMaterial::Average)),
-      mDynamicFriction( 0.4f)*/
+      mDynamicFriction( 0.4f)
 {
-   /*need an ifdef : this is for physx3 ?
    createPhysicsMaterial();
    updatePhysicsMaterial();
    smAllTerrainMaterials.push_back( this );
-   */
 }
+#else
+{
+}
+#endif
 
 TerrainMaterial::~TerrainMaterial()
 {
-   /*need an ifdef : this is for physx3 ?
+#ifdef TORQUE_PHYSICS_PHYSX3
    if(mPhysicsMaterial)
       SAFE_DELETE(mPhysicsMaterial);
 
    smAllTerrainMaterials.remove( this );
-   */
+#endif
 }
 
 void TerrainMaterial::initPersistFields()
@@ -122,8 +125,7 @@ void TerrainMaterial::initPersistFields()
    addField( "parallaxScale", TypeF32, Offset( mParallaxScale, TerrainMaterial ), "Used to scale the height from the normal map to give some self "
 	   "occlusion effect (aka parallax) to the terrain material" );
 
-
-	/*need an ifdef : this is for physx3 ?
+#ifdef TORQUE_PHYSICS_PHYSX3
 	addGroup("PhysicsMaterial");
 
 	addField("restitution", TypeF32, Offset(mRestitution, TerrainMaterial),
@@ -148,19 +150,20 @@ void TerrainMaterial::initPersistFields()
 
 	endGroup("PhysicsMaterial");
 
-   */
+#endif
    Parent::initPersistFields();
 
    // Gotta call this at least once or it won't get created!
    Sim::getTerrainMaterialSet();
 }
 
-/*need an ifdef : this is for physx3 ?
+#ifdef TORQUE_PHYSICS_PHYSX3
 PhysicsMaterial *TerrainMaterial::getPhysicsMaterial()
 {
    AssertFatal(mPhysicsMaterial,"TerrainMaterial::getPhysicsMaterial");
    return mPhysicsMaterial;
-}*/
+}
+#endif
 
 bool TerrainMaterial::onAdd()
 {
@@ -188,7 +191,8 @@ TerrainMaterial* TerrainMaterial::getWarningMaterial()
 { 
    return findOrCreate( NULL );
 }
-/*need an ifdef : this is for physx3 ?
+
+#ifdef TORQUE_PHYSICS_PHYSX3
 void TerrainMaterial::updatePhysicsMaterial()
 {
 	if (PHYSICSMGR)
@@ -205,7 +209,8 @@ void TerrainMaterial::createPhysicsMaterial()
 		if (!mPhysicsMaterial)
 			mPhysicsMaterial = PHYSICSMGR->createMaterial(mRestitution, mStaticFriction, mDynamicFriction);
 	}
-}*/
+}
+#endif
 
 TerrainMaterial* TerrainMaterial::findOrCreate( const char *nameOrPath )
 {
@@ -216,13 +221,20 @@ TerrainMaterial* TerrainMaterial::findOrCreate( const char *nameOrPath )
    
    // See if we can just find it.
    TerrainMaterial *mat = dynamic_cast<TerrainMaterial*>( set->findObjectByInternalName( StringTable->insert( nameOrPath ) ) );
-   
+
+// final dual patch..
+#ifndef TORQUE_PHYSICS_PHYSX3   
    if ( mat )
-   /*need an ifdef : this is for physx3 ?
+   {
+      return mat;
+   }
+#else
+   if ( mat )
    {
       mat->updatePhysicsMaterial();
-      */return mat;/* // oppa hacking style!
-   }*/
+      return mat;
+   }
+#endif
 
    // We didn't find it... so see if its a path to a
    // file.  If it is lets assume its the texture.
@@ -232,9 +244,9 @@ TerrainMaterial* TerrainMaterial::findOrCreate( const char *nameOrPath )
       mat->setInternalName( nameOrPath );
       mat->mDiffuseMap = nameOrPath;
       mat->registerObject();
-      /*need an ifdef : this is for physx3 ?
+#ifdef TORQUE_PHYSICS_PHYSX3  
 	  mat->updatePhysicsMaterial();
-	  */
+#endif
       Sim::getRootGroup()->addObject( mat );
       
       return mat;
@@ -256,9 +268,9 @@ TerrainMaterial* TerrainMaterial::findOrCreate( const char *nameOrPath )
       mat->mMacroMap = GFXTextureManager::getWarningTexturePath();
       mat->mMacroSize = 200;
       mat->registerObject();
-      /*need an ifdef : this is for physx3 ?
+#ifdef TORQUE_PHYSICS_PHYSX3  
 	  mat->updatePhysicsMaterial();
-	  */
+#endif
       Sim::getRootGroup()->addObject( mat );
    }
 
