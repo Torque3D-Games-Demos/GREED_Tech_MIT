@@ -136,12 +136,12 @@ PhysLib Physics::getPhysicsLib()
 	return mPhysLib;
 };
 
-/* px3 removal ? 
+/* px3 removal ? */
 PhysShape* Physics::createPhysShapeSoft(const PhysSoftInfo& descr)
 {
 	PhysShape* ps = new PhysShapeSoftDummy(this,descr);
 	return ps;
-}*/
+}
 
 ConsoleFunction( getPhysicsLib, const char*, 1, 1, "" )
 {
