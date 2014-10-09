@@ -7,6 +7,7 @@
 #ifdef PHYSICS_ODE
 #include "T3D/logickingMechanics/physics/ode/physicsODE.h"
 #endif
+
 #ifdef PHYSICS_BULLET
 #include "T3D/logickingMechanics/physics/bullet/physicsBullet.h"
 #endif
@@ -136,7 +137,6 @@ PhysLib Physics::getPhysicsLib()
 	return mPhysLib;
 };
 
-/* px3 removal ? */
 PhysShape* Physics::createPhysShapeSoft(const PhysSoftInfo& descr)
 {
 	PhysShape* ps = new PhysShapeSoftDummy(this,descr);
@@ -145,7 +145,7 @@ PhysShape* Physics::createPhysShapeSoft(const PhysSoftInfo& descr)
 
 ConsoleFunction( getPhysicsLib, const char*, 1, 1, "" )
 {
-	PhysLib lib = Physics::getPhysicsLib();
+ 	PhysLib lib = Physics::getPhysicsLib();
 	const char* libName = NULL;
 	switch(lib)
 	{

@@ -55,9 +55,9 @@ protected:
    btConstraintSolver *mSolver;
    btDefaultCollisionConfiguration *mCollisionConfiguration;
   	btThreadSupportInterface *mThreadSupportCollision;
-   //.logicking >>
-   btSoftBodyWorldInfo mSoftBodyWorldInfo;
-   //.logicking <<
+  //.logicking >>
+  btSoftBodyWorldInfo mSoftBodyWorldInfo;
+  //.logicking <<
 
    bool mErrorReport;
 

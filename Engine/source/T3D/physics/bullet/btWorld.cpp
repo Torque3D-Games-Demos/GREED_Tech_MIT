@@ -89,29 +89,25 @@ bool BtWorld::initWorld( bool isServer, ProcessList *processList )
       mThreadSupportCollision = NULL;
       mDispatcher = new	btCollisionDispatcher( mCollisionConfiguration );
    }
-//.logicking >>
-#ifndef BULLET_INFINITE_WORLD  
+  
    btVector3 worldMin( -2000, -2000, -1000 );
    btVector3 worldMax( 2000, 2000, 1000 );
    btAxisSweep3 *sweepBP = new btAxisSweep3( worldMin, worldMax );
    mBroadphase = sweepBP;
    sweepBP->getOverlappingPairCache()->setInternalGhostPairCallback( new btGhostPairCallback() );
-#else
-	mBroadphase = new btDbvtBroadphase();
-	mBroadphase->getOverlappingPairCache()->setInternalGhostPairCallback( new btGhostPairCallback() );
-#endif
-	//.logicking <<
+
    // The default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded).
    mSolver = new btSequentialImpulseConstraintSolver;
 
    //.logicking >>
    mDynamicsWorld = new btSoftRigidDynamicsWorld(mDispatcher,mBroadphase,mSolver,mCollisionConfiguration);
    mSoftBodyWorldInfo.m_broadphase = mBroadphase;
-  mSoftBodyWorldInfo.m_dispatcher = mDispatcher;
-  mSoftBodyWorldInfo.m_gravity = btCast<btVector3>( mGravity );
-  mSoftBodyWorldInfo.m_sparsesdf.Initialize();
+   mSoftBodyWorldInfo.m_dispatcher = mDispatcher;
+   mSoftBodyWorldInfo.m_gravity = btCast<btVector3>( mGravity );
+   mSoftBodyWorldInfo.m_sparsesdf.Initialize();
 
-   /* mDynamicsWorld = new btDiscreteDynamicsWorld( mDispatcher, mBroadphase, mSolver, mCollisionConfiguration );*/
+
+   //mDynamicsWorld = new btDiscreteDynamicsWorld( mDispatcher, mBroadphase, mSolver, mCollisionConfiguration );
    //.logicking <<
    if ( !mDynamicsWorld )
    {
@@ -180,7 +176,6 @@ void BtWorld::tickPhysics( U32 elapsedMs )
    //.logicking >>
    mSoftBodyWorldInfo.m_sparsesdf.GarbageCollect();
    //.logicking <<
-
    //Con::printf( "%s BtWorld::tickPhysics!", this == smClientWorld ? "Client" : "Server" );
 }
 
@@ -228,15 +223,14 @@ public:
 		
 };
 //.logicking <<
-
 bool BtWorld::castRay( const Point3F &startPnt, const Point3F &endPnt, RayInfo *ri, const Point3F &impulse )
 {
-   //.logicking
+  //.logicking
    //btCollisionWorld::ClosestRayResultCallback result( btCast<btVector3>( startPnt ), btCast<btVector3>( endPnt ) );
    btWorldClosestRayResultCallback result( btCast<btVector3>( startPnt ), btCast<btVector3>( endPnt ) );
    mDynamicsWorld->rayTest( btCast<btVector3>( startPnt ), btCast<btVector3>( endPnt ), result );
 
-   //.logicking >>
+ //.logicking >>
    //soft body ray casting
    btSoftRigidDynamicsWorld* softRigidWorld = static_cast<btSoftRigidDynamicsWorld*>(mDynamicsWorld);
    btSoftBody::sRayCast rayCastRes;
@@ -257,8 +251,6 @@ bool BtWorld::castRay( const Point3F &startPnt, const Point3F &endPnt, RayInfo *
 	   }
    }
    //.logicking <<
-   
-
    if ( !result.hasHit() || !result.m_collisionObject )
       return false;
 

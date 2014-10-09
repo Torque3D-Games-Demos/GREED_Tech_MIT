@@ -36,9 +36,7 @@ public:
 
 	virtual PhysShape* createPhysShapeSoft(const PhysSoftInfo& descr);
 
-	//virtual PhysShape* (const PhysSoftInfo& descr);
-
-	//virtual PhysJoint* createPhysJoint(PhysJointInfo& descr) = 0;
+	virtual PhysJoint* createPhysJoint(PhysJointInfo& descr) = 0;
 	
 	static PhysLib getPhysicsLib();
 

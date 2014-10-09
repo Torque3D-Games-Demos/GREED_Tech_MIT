@@ -52,7 +52,7 @@ PhysShapeSoftBullet::PhysShapeSoftBullet(Physics* phys, const PhysSoftInfo &phys
 
 	m_softBody->setTotalMass(m_physInfo.mass,true);
 	
-if (m_physSoftInfo.poseMatchKoef>0.f)
+	if (m_physSoftInfo.poseMatchKoef>0.f)
 	{
 		m_softBody->m_cfg.kMT = m_physSoftInfo.poseMatchKoef;//0.05;
 		m_softBody->randomizeConstraints();

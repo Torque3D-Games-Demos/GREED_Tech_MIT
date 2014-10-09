@@ -375,7 +375,7 @@ std::size_t RagDoll::addBone(S32 bode_idx, const char* parent_node_name,
 		jointInfo.params2 = jointParam2;
 		jointInfo.pos = joint_global_pos;//bone_info.model_transform.getPosition();
 		
-//		bone_info.constraint = mPhysics->createPhysJoint(jointInfo);
+		bone_info.constraint = mPhysics->createPhysJoint(jointInfo);
 	}
 	else
 	{

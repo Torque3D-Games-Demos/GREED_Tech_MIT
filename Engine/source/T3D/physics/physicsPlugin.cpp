@@ -135,7 +135,7 @@ ConsoleFunction( physicsPluginPresent, bool, 1, 1, "physicsPluginPresent()\n"
 
 ConsoleFunction( physicsInit, bool, 1, 2, "physicsInit( [string library] )" )
 {
-   const char *library = "default";
+   const char *library = "Bullet";
    if ( argc > 1 )
       library = argv[1];
    // BlissGMK >>
