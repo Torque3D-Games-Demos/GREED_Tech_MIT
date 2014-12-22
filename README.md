@@ -1,4 +1,4 @@
-Greed v00.00.05b
+Greed v00.00.06a
 -------
 
 Changelog :
@@ -13,12 +13,16 @@ Changelog :
 http://www.garagegames.com/community/resources/view/22590
 ###### .05a  : alpha : started testing fps performances on d3d9-refactor. (avg fps on default : 103.45)
 ###### .05b  : alpha : first official commit, refactor was removed : half the fps were lost
+
+###### .06a  : alpha : clean GMK reintegrated, bullet was chosen as the default physic engine
+###### ragdolls are semi fixed (still some distorting : need some bones ?) 
+###### memory leaks for loading meshes are fixed.
+
 ----------------
 This is a fork of the MIT Licensed Torque 3D (see http://www.garagegames.com/products/torque-3d).
 
 More Information
 ----------------
-* 
 * Torque 3D [GitHub Wiki](https://github.com/GarageGames/Torque3D/wiki)
 * Documentation is in the [Torque3D-Documentation](https://github.com/GarageGames/Torque3D-Documentation) GitHub repo.
 * Project Manager is in the [Torque3D-ProjectManager](https://github.com/GarageGames/Torque3D-ProjectManager) GitHub repo.
@@ -39,13 +43,17 @@ The following templates are included in this version of Torque 3D:
 * Empty
 * Full
 
-### Using PhysX ###
-As of 0.3b, basic PhysX 3.3 is integrated as a module.
-todo : GMK (asap).
+### Using Bullet ###
+As of 0.6b, full bullet support is now on.
+todo : 
+- basic physic vehicle based on examples.
+- elevators (lifts)
+- jointed vehicles (trailers)
 
 ### Using the Project Manager to Create a Project ###
 
-The *Project Manager* may be used to create a new game project based on one of the templates that are included with Greed. 
+The *Project Manager* may be used to create a new game project based on 
+one of the templates that are included with Greed. 
 For now only base Full and Empty templates are available, altough, fps tutorial is probably useable.
 
 Greed License
@@ -54,7 +62,7 @@ Greed is MIT Licensed as the original Torque 3D software is.
 -------
 Hénarès Sébastien aka dragutux / FrantiK.
 
-Original Copyright Torque 3D MIT 3.5 (c) 2012 GarageGames, LLC
+Original Copyright Torque 3D MIT 3.6 (c) 2012-2014 GarageGames, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to
